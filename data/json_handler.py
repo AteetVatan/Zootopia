@@ -1,14 +1,11 @@
-"""Module for Json DeSerialization """
-import json
-from pydantic import BaseModel, ValidationError
-from typing import Type
-from data.animal_metadata_schema import AnimalMetadataSchemaRoot
+"""Module for Json DeSerialization"""
+import json  # json module for json
 
 
 class JsonHandler:
 
     @classmethod
-    def deserialize_json(cls, jason_str: str, schema: Type[BaseModel]):
+    def deserialize_json(cls, jason_str: str):
         """
         Method to Json DeSerialization to the given schema class instance.
         :param jason_str: The Json data string
@@ -16,10 +13,7 @@ class JsonHandler:
         :return:
         """
         try:
-            data = json.loads(jason_str)
-            deserialized_data = schema.model_validate(data)
-            return deserialized_data
+            json_data = json.loads(jason_str)
+            return json_data
         except json.JSONDecodeError as e:
-            print(f"JsonHandler : JSONDecodeError - {e}")
-        except ValidationError as e:
-            print(f"JsonHandler : ValidationError - {e}")
+            print(f"JsonHandler.deserialize_json : JSONDecodeError - {e}")

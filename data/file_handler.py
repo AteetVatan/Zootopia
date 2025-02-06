@@ -1,23 +1,38 @@
-"""Module to read and write data"""
-import os
+"""Module to handle File Operations."""
+import os  # The os module
 
 
 class FileHandler:
-    __json_file_name = "animals_data.json"
-    __json_file_path = os.path.join(os.getcwd(), "data", __json_file_name)
+    """
+    Class for file operations.
+    """
+    __file_name = "animals_data.json"
 
     @classmethod
-    @property
-    def json_file_name(cls):
-        """Method to get Json file name"""
-        return cls.__json_file_name
+    def get_file_name(cls):
+        """Getter for File name."""
+        return cls.__file_name
+
+    @classmethod
+    def set_file_name(cls, file_name: str):
+        """Setter for the File name."""
+        cls.__file_name = file_name
+
+    @classmethod
+    def get_filepath(cls):
+        """Compute and return the Absolute File Path dynamically."""
+        return str(os.path.join(os.getcwd(), "data", cls.__file_name))  # ✅ Compute dynamically
+
 
     @classmethod
     def read_data(cls):
-        """Method to read data fo file"""
+        """
+        Method to read file data.
+        :return: File data as string
+        """
         d = None
         try:
-            with open(cls.__json_file_path, mode="+rt", encoding="utf-8") as data:
+            with open(cls.get_filepath(), mode="rt", encoding="utf-8") as data:  # ✅ Now file_path is a computed property
                 d = data.read()
         except FileNotFoundError as f:
             print(f)
