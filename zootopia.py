@@ -6,6 +6,7 @@ from web.animals_web_generator import AnimalWebGenerator
 
 
 def init_zootopia():
+    """Main function for Zootopia application."""
     sdh = SchemaDataHandler("animals_data.json", "data", AnimalMetadataSchemaRoot)  # The schema class instance.
     data = sdh.data  # Json data from file cast to the AnimalMetadataSchemaRoot class
     search_keys = ("name", "diet", "locations", "type")  # The Keys to be searched and display in HTML.
