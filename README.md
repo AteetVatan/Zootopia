@@ -8,5 +8,5 @@ Zootopia project for displaying Animal Data on Web.
 git clone https://github.com/AteetVatan/Zootopia.git
 
 
-# Install dependencies (for Node.js)
+# Install dependencies
  pip install -U pydantic # pydantic Module for data validation.
