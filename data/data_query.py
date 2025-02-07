@@ -1,9 +1,11 @@
+"""Module to Query Data."""
 from typing import Type, List, Dict
 from pydantic import BaseModel
 
 
 class DataQuery:
-    # The pydantic data object 
+    """Class for Data Queries"""
+    # The pydantic data object
     _data: Type[BaseModel]
 
     def __init__(self, data: Type[BaseModel]):
