@@ -41,7 +41,7 @@ class AnimalWebGenerator:
         for item in data_list:
             line_list.append('<li class="cards__item">\n')
             title = ""
-            sub_line_list = []
+            sub_line_list = ['<div class="card__text">\n<ul>']
             for k, v in item.items():
                 if isinstance(v, list):
                     val = str(v[0])
@@ -50,7 +50,8 @@ class AnimalWebGenerator:
                 if k == title_key:
                     title = f'<div class="card__title">{val.title()}</div>\n'
                 else:
-                    sub_line_list.append(f"<strong>{k.title()}:</strong> {val.title()}<br/>\n")
+                    sub_line_list.append(f"<li><strong>{k.title()}:</strong> {val.title()}</li>\n")
+            sub_line_list.append('</ul>\n</div>')
             line_list.append(title)
             line_list.append('<p class="card__text">')
             line_list.extend(sub_line_list)
