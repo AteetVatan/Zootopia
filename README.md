@@ -9,4 +9,6 @@ git clone https://github.com/AteetVatan/Zootopia.git
 
 
 # Install dependencies
+ pip3 install python-dotenv
  pip install -U pydantic # pydantic Module for data validation.
+ pip3 install requests

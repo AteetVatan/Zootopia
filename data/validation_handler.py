@@ -1,4 +1,5 @@
 """Module for Data Validation."""
+import sys
 from typing import Type  # typing module for specifying Explicit types.
 from pydantic import BaseModel, ValidationError  # pydantic module for schema validation.
 
@@ -18,10 +19,13 @@ class ValidationHandler:
         """
         try:
             validated_data = schema.model_validate(data)
+            return validated_data
         except ValidationError as e:
-            print(f"ValidationHandler.validate_data : ValidationError - {e}")
-            validated_data = None
-        return validated_data
+            errors = e.errors()
+            print(f"ValidationHandler.Validation Error: ")
+            for err in errors:
+                print(f"{err}")
+            sys.exit(1)
 
     @classmethod
     def set_schema(cls):

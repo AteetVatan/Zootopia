@@ -1,17 +1,17 @@
 """Data Schema Module."""
-from typing import List, Dict  # typing module for specifying Explicit types.
+from typing import List, Dict, Optional  # typing module for specifying Explicit types.
 from pydantic import BaseModel, RootModel, Field  # pydantic module for schema validation.
 
 
 class Taxonomy(BaseModel):
     """Class for Json property Taxonomy."""
     kingdom: str
-    phylum: str
-    class_: str = Field(alias="class")  # alias class_ to handel keyword
-    order: str
-    family: str
-    genus: str
-    scientific_name: str
+    phylum: Optional[str] = None
+    class_: Optional[str] = Field(None, alias="class")  # alias class_ to handel keyword
+    order: Optional[str] = None
+    family: Optional[str] = None
+    genus: Optional[str] = None
+    scientific_name: Optional[str] = None
 
     class Config:
         """Class for Taxonomy default configration."""

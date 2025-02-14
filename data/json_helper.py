@@ -2,7 +2,7 @@
 import json  # json module for json
 
 
-class JsonHandler:
+class JsonHelper:
     """Class for Json Deserialization and Serialization"""
 
     @classmethod
