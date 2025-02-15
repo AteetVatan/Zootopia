@@ -2,6 +2,7 @@
 from services.html_data_handler import HtmlDataHandler
 from services.data_query import DataQuery
 import config
+from constants import constants
 
 
 class AnimalWebGenerator:
@@ -14,28 +15,31 @@ class AnimalWebGenerator:
             HtmlDataHandler(config.ANIMALS_HTML_TEMPLATE, config.ANIMALS_HTML_TEMPLATE_DIR))
         self.__search_keys = config.JSON_DATA_SEARCH_KEYS
 
-    def display_key_info_in_html(self, json_data, file_name=None, title_key=None) -> None:
+    def display_key_info_in_html(self, data, file_name=None, title_key=None, search_item=None) -> bool:
         """Method to display the data keys result in HTML."""
-        dq = DataQuery(json_data)
-        results = dq.query_data(*self.__search_keys)
-        title_key = title_key if title_key is not None else self.__search_keys[0]
+        if len(data.root) > 0:
+            dq = DataQuery(data)
+            results = dq.query_data(*self.__search_keys)
+            title_key = title_key if title_key is not None else self.__search_keys[0]
 
-        key_html_list = AnimalWebGenerator._get_key_results_html(title_key, results)
-        modified_html = (AnimalWebGenerator.
-                         _modify_html_with_key_result(self.__data_handler.data, key_html_list))
+            key_html_list = AnimalWebGenerator._get_key_results_html(title_key, results)
+            modified_html = (self.__modify_html_with_key_result(key_html_list))
+            success = True
+        else:
+            result_html = constants.HTML_NO_OUTPUT.format(search=search_item)
+            modified_html = (self.__modify_html_with_key_result(result_html))
+            success = False
 
         file_name = file_name if file_name is not None else config.ANIMALS_HTML_FILE
         self.__data_handler.write_data(modified_html, "", file_name)
-        print("done")
+        return success
 
-    @staticmethod
-    def _modify_html_with_key_result(html_data, key_html) -> str:
+    def __modify_html_with_key_result(self, html_data) -> str:
         """
-        Function to print the keys in data
-        :param data: The pydantic data object.
-        :param keys: Searched keys tuple.
+        Method to print the keys in data
+        :param html_data: Searched keys tuple.
         """
-        return html_data.replace(AnimalWebGenerator._HTML_PLACEHOLDER, key_html)
+        return self.__data_handler.data.replace(AnimalWebGenerator._HTML_PLACEHOLDER, html_data)
 
     @staticmethod
     def _get_key_results_html(title_key: str, data_list: list[dict]) -> str:

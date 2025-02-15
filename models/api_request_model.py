@@ -15,7 +15,7 @@ class ApiRequestModel:
         self.__key_value = env.animal_api_key_value
         self.__query_endpoint = config.ANIMAL_API_QUERY_ENDPOINT
         self.__query_param_key = config.ANIMAL_API_QUERY_PARAM_NAME
-        self.__query_param_value = "fox"
+        self.__query_param_value = config.ANIMAL_DEFAULT_SEARCH
 
     @property
     def endpoint_url(self):
@@ -65,4 +65,5 @@ class ApiRequestModel:
     @query_param_key.setter
     def query_param_value(self, value):
         """ Method to set query_param_value."""
-        self.__query_param_value = value
+        if value:
+            self.__query_param_value = value

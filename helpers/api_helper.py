@@ -10,9 +10,8 @@ class ApiHelper:
     def __init__(self, api_request_model: ApiRequestModel):
         self.__api_request_model = api_request_model
 
-    def get_data(self, query_param_value):
+    def get_data(self):
         """Method to get the data."""
-        self.__api_request_model.query_param_value = query_param_value
         api_url = self.__api_request_model.endpoint_url
         params = self.__api_request_model.param_dict
         headers = self.__api_request_model.header_dict

@@ -17,10 +17,12 @@ class BaseDataHandler(ABC):
     __api_request_model: ApiRequestModel
 
     # api_tup = (api_base_url,key_name,key_value,query_endpoint, query_param_key, query_param_value)
-    def __init__(self, file_data_model: FileDataModel = None, load_data_from_api=False):
+    def __init__(self, file_data_model: FileDataModel = None,
+                 api_request_model: ApiRequestModel = None,
+                 load_data_from_api=False):
         self.__load_data_from_api = load_data_from_api
         if load_data_from_api:
-            self.__api_request_model = ApiRequestModel()
+            self.__api_request_model = api_request_model if api_request_model else ApiRequestModel()
             self.__api_handler = ApiHelper(self.__api_request_model)
         else:
             self.__file_data_model = file_data_model if file_data_model else FileDataModel()
@@ -43,7 +45,7 @@ class BaseDataHandler(ABC):
         if not self.__load_data_from_api:
             self.data = self.__file_handler.read_data()
         else:
-            self.data = self.__api_handler.get_data("cat")
+            self.data = self.__api_handler.get_data()
 
     def write_data(self, file_data: str, file_dir: str = "", file_name: str = ""):
         """Method to write the data """
