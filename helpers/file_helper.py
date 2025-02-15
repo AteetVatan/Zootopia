@@ -1,17 +1,17 @@
 """Module to handle File Operations."""
 import os  # The os module
+from models.file_data_model import FileDataModel
 
 
-class FileHandler:
+class FileHelper:
     """
     Class for file operations.
     """
-    __file_name = "animals_data.json"
-    __directory = ""
+    __file_name = __directory = ""
 
-    def __init__(self, file_name: str, directory: str):
-        self.__file_name = file_name
-        self.__directory = directory
+    def __init__(self, file_data_model: FileDataModel):
+        self.__file_name = file_data_model.file_name
+        self.__directory = file_data_model.file_dir
 
     @property
     def file_name(self):
@@ -26,7 +26,7 @@ class FileHandler:
     @property
     def filepath(self):
         """Compute and return the Absolute File Path dynamically."""
-        return FileHandler.__create_filepath(self.__directory, self.__file_name)
+        return FileHelper.__create_filepath(self.__directory, self.__file_name)
 
     @staticmethod
     def __create_filepath(file_dir: str, file_name: str):
@@ -72,7 +72,7 @@ class FileHandler:
         :param file_name: (optional):The Writable File Name.
         """
         if file_name != "":
-            filepath = FileHandler.__create_filepath(file_dir, file_name)
+            filepath = FileHelper.__create_filepath(file_dir, file_name)
         else:
             filepath = self.filepath
 

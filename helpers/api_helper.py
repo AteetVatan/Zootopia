@@ -1,18 +1,22 @@
+"""Module For API requests"""
 import requests
 from models.api_request_model import ApiRequestModel
 
 
-class ApiHandler:
+class ApiHelper:
+    """Class For API requests"""
     __api_request_model: ApiRequestModel
 
-    def __init__(self):
-        self.__api_request_model = ApiRequestModel()
+    def __init__(self, api_request_model: ApiRequestModel):
+        self.__api_request_model = api_request_model
 
     def get_data(self, query_param_value):
-        api_url = self.__api_request_model.get_endpoint_url
-        params = self.__api_request_model.get_param_dict(query_param_value)
-        headers = self.__api_request_model.get_request_header_dict
-        response = ApiHandler.__get_request_with_params(api_url, params=params, headers=headers)
+        """Method to get the data."""
+        self.__api_request_model.query_param_value = query_param_value
+        api_url = self.__api_request_model.endpoint_url
+        params = self.__api_request_model.param_dict
+        headers = self.__api_request_model.header_dict
+        response = ApiHelper.__get_request_with_params(api_url, params=params, headers=headers)
 
         try:
             if response.status_code != requests.codes.ok:
@@ -24,8 +28,9 @@ class ApiHandler:
 
     @staticmethod
     def __get_request_with_params(url, params=None, headers=None):
+        """Method to generate HTTP get request."""
         try:
-            response = requests.get(url, params=params, headers=headers)
+            response = requests.get(url, params=params, headers=headers, timeout=30)
             response.raise_for_status()
             return response
 

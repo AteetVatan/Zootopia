@@ -4,7 +4,7 @@ from typing import Type  # typing module for specifying Explicit types.
 from pydantic import BaseModel, ValidationError  # pydantic module for schema validation.
 
 
-class ValidationHandler:
+class ValidationHelper:
     """Class for Data Validation."""
 
     @classmethod
@@ -22,7 +22,7 @@ class ValidationHandler:
             return validated_data
         except ValidationError as e:
             errors = e.errors()
-            print(f"ValidationHandler.Validation Error: ")
+            print("ValidationHandler.Validation Error: ")
             for err in errors:
                 print(f"{err}")
             sys.exit(1)
