@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="static/home_style.css">
+</head>
+<body>
+<div class="cards">
+    <div class="cards__item">
+        <h1 class="card__title">{{ welcome_msg }}</h1>
+        <form action="/animal-info" method="GET" class="form-group">
+            <p class="card__text">{{ user_question }}</p>
+            <input type="text" name="name" required class="input-field"><br>
+            <input type="submit" value="Submit" class="submit-button">
+        </form>
+    </div>
+</div>
+</body>
+</html>

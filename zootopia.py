@@ -17,7 +17,7 @@ def zootopia():
             sdh = SchemaDataHandler(AnimalMetadataSchemaRoot, search_item)
         else:
             sdh = SchemaDataHandler(AnimalMetadataSchemaRoot)
-        # Json data from file cast to the AnimalMetadataSchemaRoot class
+        # JSON data from a file cast to the AnimalMetadataSchemaRoot class
         data = sdh.data
         # AnimalWebGenerator reads data from animals_template.html.
         awg = AnimalWebGenerator()

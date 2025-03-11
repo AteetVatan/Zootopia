@@ -1,4 +1,5 @@
 """Module for Animal data web interface."""
+from typing import List, Dict
 from services.html_data_handler import HtmlDataHandler
 from services.data_query import DataQuery
 import config
@@ -9,20 +10,32 @@ class AnimalWebGenerator:
     """Class For Animal Data HTML operation"""
     __data_handler: HtmlDataHandler
     _HTML_PLACEHOLDER = config.ANIMAL_HTML_PLACEHOLDER
+    __query_data = None
 
     def __init__(self):
         self.__data_handler = (
             HtmlDataHandler(config.ANIMALS_HTML_TEMPLATE, config.ANIMALS_HTML_TEMPLATE_DIR))
         self.__search_keys = config.JSON_DATA_SEARCH_KEYS
 
-    def display_key_info_in_html(self, data, file_name=None, title_key=None, search_item=None) -> bool:
-        """Method to display the data keys result in HTML."""
+    @property
+    def query_data(self):
+        """The Query Data."""
+        return self.__query_data
+
+    def set_query_data(self, data):
+        """Method to get the data for the keys see JSON_DATA_SEARCH_KEYS."""
         if len(data.root) > 0:
             dq = DataQuery(data)
-            results = dq.query_data(*self.__search_keys)
-            title_key = title_key if title_key is not None else self.__search_keys[0]
+            self.__query_data = dq.query_data(*self.__search_keys)
+            return
+        self.__query_data = list()
 
-            key_html_list = AnimalWebGenerator._get_key_results_html(title_key, results)
+    def display_key_info_in_html(self, data, file_name=None, title_key=None, search_item=None) -> bool:
+        """Method to display the data keys result in HTML."""
+        self.set_query_data(data)
+        if len(self.__query_data) > 0:
+            title_key = title_key if title_key is not None else self.__search_keys[0]
+            key_html_list = AnimalWebGenerator._get_key_results_html(title_key, self.__query_data)
             modified_html = (self.__modify_html_with_key_result(key_html_list))
             success = True
         else:

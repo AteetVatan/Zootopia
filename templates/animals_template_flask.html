@@ -1,0 +1,29 @@
+<html>
+<head>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<h1>My Animal Repository</h1>
+<ul class="cards">
+    {% for data_dict in animal_data %}
+    <li class="cards__item">
+        <div class="card__title">{{ data_dict['name'] }}</div>
+        <div class="card__text">
+            <ul>
+                {% for k,v in data_dict.items() %}
+                    {% if k != 'name' %}
+                        {% if v is sequence and v is not string %}
+                            {% set combined_v = v | join(", ") %}
+                            <li><strong>{{k.title()}}:</strong> {{combined_v}}</li>
+                        {% else %}
+                            <li><strong>{{k.title()}}:</strong> {{v}}</li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
